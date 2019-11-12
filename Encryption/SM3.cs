@@ -43,6 +43,10 @@ namespace Encryption
         /// <returns></returns>
         public string GetComputeCode(byte[] message)
         {
+            if (message == null)
+                throw new ArgumentNullException();
+            if (message.Length > Math.Pow(2, 61))
+                throw new Exception("输入长度超出范围,最大长度不应超过2^31个字节");
             V origin = new V();
             byte[] fillMessage = FillMessage(message);
             int n = fillMessage.Length / 64;
