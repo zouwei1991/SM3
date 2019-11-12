@@ -36,6 +36,29 @@ namespace Encryption
         }
 
         /// <summary>
+        /// sm3算法发回哈希值
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public string GetComputeCode(byte[] message)
+        {
+            V origin = new V();
+            byte[] fillMessage = FillMessage(message);
+            int n = fillMessage.Length / 64;
+            for (int i = 0; i < n; i++)
+            {
+                byte[] groupBytes = new byte[64];
+                for (int j = 0; j < groupBytes.Length; j++)
+                {
+                    groupBytes[j] = fillMessage[64 * i + j];
+                }
+                uint[] splitArray = SplitMessage(groupBytes);
+                origin = CF(origin, splitArray);
+            }
+            return origin.ToHashCode();
+        }
+
+        /// <summary>
         /// 根据输入字符数组获取填充后的数组
         /// </summary>
         /// <param name="message"></param>
@@ -327,6 +350,28 @@ namespace Encryption
                     }
                     result[i] = b;
                 }
+                return result;
+            }
+
+            public string ToHashCode()
+            {
+                string result = string.Empty;
+                string temp = Convert.ToString(A, 16);
+                result += temp;
+                temp = Convert.ToString(B, 16);
+                result += temp;
+                temp = Convert.ToString(C, 16);
+                result += temp;
+                temp = Convert.ToString(D, 16);
+                result += temp;
+                temp = Convert.ToString(E, 16);
+                result += temp;
+                temp = Convert.ToString(F, 16);
+                result += temp;
+                temp = Convert.ToString(G, 16);
+                result += temp;
+                temp = Convert.ToString(H, 16);
+                result += temp;
                 return result;
             }
         }
