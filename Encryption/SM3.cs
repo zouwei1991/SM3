@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Encryption
 {
@@ -355,24 +356,25 @@ namespace Encryption
 
             public string ToHashCode()
             {
-                string result = string.Empty;
-                string temp = Convert.ToString(A, 16);
-                result += temp;
+                StringBuilder sb = new StringBuilder();
+                string temp = string.Empty;
+                temp = Convert.ToString(A, 16);
+                sb.Append(temp);
                 temp = Convert.ToString(B, 16);
-                result += temp;
+                sb.Append(temp);
                 temp = Convert.ToString(C, 16);
-                result += temp;
-                temp = Convert.ToString(D, 16);
-                result += temp;
-                temp = Convert.ToString(E, 16);
-                result += temp;
+                sb.Append(temp);
+                temp= Convert.ToString(D, 16);
+                sb.Append(temp);
+                temp= Convert.ToString(E, 16);
+                sb.Append(temp);
                 temp = Convert.ToString(F, 16);
-                result += temp;
+                sb.Append(temp);
                 temp = Convert.ToString(G, 16);
-                result += temp;
+                sb.Append(temp);
                 temp = Convert.ToString(H, 16);
-                result += temp;
-                return result;
+                sb.Append(temp);            
+                return sb.ToString();
             }
         }
 
